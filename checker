@@ -1,0 +1,58 @@
+import discord
+from discord.ext import commands
+
+# Initialize the Discord bot
+bot = commands.Bot(command_prefix='!')
+
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user.name}')
+
+@bot.command(name='link_wallet')
+async def link_wallet(ctx, wallet_address):
+    """
+    Command to link a StarkNet wallet to a Discord user.
+    Example: !link_wallet <wallet_address>
+    """
+    # Perform additional validation or checks for crybaby detection
+    is_crybaby = crybaby_detection(ctx.message.content)
+
+    if is_crybaby:
+        await ctx.send(f'Suspicious behavior detected. Crybaby linked: {wallet_address}')
+        # Perform actions like storing the linked crybaby and wallet_address
+        # You may want to store this information securely or report it to moderators
+
+@bot.command(name='check_crybabies')
+async def check_crybabies(ctx):
+    """
+    Command to check for linked crybabies.
+    """
+    # Implement logic to retrieve and display linked crybabies and their wallet addresses
+    crybabies = get_linked_crybabies()
+    
+    if crybabies:
+        crybaby_list = '\n'.join(f'{crybaby["username"]} - {crybaby["wallet_address"]}' for crybaby in crybabies)
+        await ctx.send(f'Crybabies Linked:\n{crybaby_list}')
+    else:
+        await ctx.send('No crybabies linked.')
+
+def crybaby_detection(message_content):
+    """
+    Placeholder for crybaby detection logic.
+    You may want to implement a more sophisticated algorithm.
+    """
+    return 'crybaby' in message_content.lower()
+
+def get_linked_crybabies():
+    """
+    Placeholder for retrieving linked crybabies.
+    Replace this with your storage or retrieval mechanism.
+    """
+    # Dummy data, replace with actual implementation
+    return [
+        {"username": "Crybaby1", "wallet_address": "0x123abc"},
+        {"username": "Crybaby2", "wallet_address": "0x456def"}
+    ]
+
+# Run the bot with your Discord bot token
+bot.run('YOUR_DISCORD_BOT_TOKEN')
